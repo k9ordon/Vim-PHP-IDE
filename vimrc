@@ -6,6 +6,9 @@ set history=500
 
 au FileType php set omnifunc=phpcomplete#CompletePHP
 
+"------ Fuzzy Search -----
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
 "------  Visual Options  ------
 set guioptions=egmt         "remove toolbar, scrollbars
 syntax on                   "Enables syntax highlighting
@@ -14,8 +17,8 @@ set nowrap                  "Disable word wrap
 set vb                      "Visual bell instead of beeps
 set ruler                   "Displays cursor position on bottom right of screen
 set statusline=%<%f\ %h%m%r%=%{fugitive#statusline()}\ \ %-14.(%l,%c%V%)\ %P
-let g:buftabs_only_basename=1
-let g:buftabs_marker_modified = "+"
+"let g:buftabs_only_basename=1
+"let g:buftabs_marker_modified = "+"
 
 "------  Behavior  ------
 set tabstop=4               "tab = 4 spaces
@@ -54,6 +57,7 @@ vmap S :s//g<LEFT><LEFT>
 "------  NERDTree Options  ------
 let NERDTreeIgnore=['CVS','\.dSYM$']
 let NERDTreeChDirMode=2     "setting root dir in NT also sets VIM's cd
+let NERDTreeShowBookmarks=1
 noremap <silent> <Leader>n :NERDTreeToggle<CR>
 " These prevent accidentally loading files while in the NERDTree panel
 autocmd FileType nerdtree noremap <buffer> <c-left> <nop>
@@ -147,41 +151,42 @@ map <Leader>? :Helptags<CR>
 if has("gui_running")
     set cursorline                  "Highlight background of current line
     autocmd VimEnter * NERDTree     "run nerdtree
-    autocmd VimEnter * TagbarOpen
-	"colorscheme solarized
-    set t_Co=256
-    colorscheme Mustang             "This theme actually works in 256, ir_black doesn't
-	set background=dark
+    "autocmd VimEnter * TagbarOpen
+    "colorscheme solarized
+    "set t_Co=256
+    colorscheme github
+    "set background=dark
 
     " Show tabs and newline characters with ,s
     nmap <Leader>s :set list!<CR>
-	set listchars=tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:×,eol:¬
+    set listchars=tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:×,eol:¬
     "Invisible character colors
     highlight NonText guifg=#4a4a59
     highlight SpecialKey guifg=#4a4a59
 
-	" Ctrl + Shift + C and Ctrl + Shift + V for copying and pasting OS Buffer
-	" Vim can't do Ctrl + Shift :'(
-	" which means C-V overwrites visual select (C-v)
-	"map <C-C> "+y
-	"map <C-V> "+gp
+    " Ctrl + Shift + C and Ctrl + Shift + V for copying and pasting OS Buffer
+    " Vim can't do Ctrl + Shift :'(
+    " which means C-V overwrites visual select (C-v)
+    "map <C-C> "+y
+    "map <C-V> "+gp
 else
     set t_Co=256
-    colorscheme Mustang             "This theme actually works in 256, ir_black doesn't
-	set mouse=a						"This allows mouse scrolling in terminal, and selection of text
+    colorscheme github
+    set mouse=a						"This allows mouse scrolling in terminal, and selection of text
 endif
 
 if has("gui_macvim") "Use Experimental Renderer option must be enabled for transparency
-	"set guifont=Monaco:h14
-	"set guifont=Monaco:h10
-    set guifont=Monaco:h16
-	"set noantialias
-	"set transparency=15
+    "set guifont=Monaco:h14
+    "set guifont=Monaco:h10
+    set guifont=EssentialPragmataPro:h18
+    set linespacing=2
+    "set noantialias
+    "set transparency=15
     " Swipe to move between bufers :D
     map <SwipeLeft> :bprev<CR>
     map <SwipeRight> :bnext<CR>
-	" OS X probably has ctags in a weird place
-	let g:tagbar_ctags_bin='/usr/local/bin/ctags'
+    " OS X probably has ctags in a weird place
+    let g:tagbar_ctags_bin='/usr/local/bin/ctags'
 endif
 
 if filereadable($HOME.'/.vimrc_local')
