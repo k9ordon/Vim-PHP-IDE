@@ -45,9 +45,9 @@ set hlsearch                "Highlight all search results
 "Following line clears the search highlights when pressing Lb
 nnoremap <leader>b :nohlsearch<CR>
 " http://www.vim.org/scripts/script.php?script_id=2572
-noremap <leader>a :Ack 
-noremap <leader>A <C-w>j<C-w>c<C-w>l
-let g:ackprg="ack -H --nocolor --nogroup --column --type-add php=.tpl"
+"noremap <leader>a :Ack 
+"noremap <leader>A <C-w>j<C-w>c<C-w>l
+"let g:ackprg="ack -H --nocolor --nogroup --column --type-add php=.tpl"
 
 "------  Replacing ------
 "type S, then type what you're looking for, a /, and what to replace it with
@@ -55,9 +55,9 @@ nmap S :%s//g<LEFT><LEFT>
 vmap S :s//g<LEFT><LEFT>
 
 "------  NERDTree Options  ------
-let NERDTreeIgnore=['CVS','\.dSYM$']
+let NERDTreeIgnore=['CVS','.git']
 let NERDTreeChDirMode=2     "setting root dir in NT also sets VIM's cd
-let NERDTreeShowBookmarks=1
+"let NERDTreeShowBookmarks=1
 noremap <silent> <Leader>n :NERDTreeToggle<CR>
 " These prevent accidentally loading files while in the NERDTree panel
 autocmd FileType nerdtree noremap <buffer> <c-left> <nop>
@@ -139,9 +139,13 @@ map <Leader>P :! php -q %<CR>
 " ,L = Toggle line numbers
 map <Leader>L :set invnumber<CR>
 " ,v = Paste
-map <Leader>v "+gP
+"map <Leader>v "+gP
 " ,c = Copy
-map <Leader>c "+y
+"map <Leader>c "+y
+" ,s ,v split vsplit
+map <Leader>s :split<CR>
+map <Leader>v :vsplit<CR>
+
 
 " Deletes trailing space in file upon write
 " autocmd BufWritePre * :%s/\s\+$//e
@@ -151,6 +155,7 @@ map <Leader>? :Helptags<CR>
 if has("gui_running")
     set cursorline                  "Highlight background of current line
     autocmd VimEnter * NERDTree     "run nerdtree
+    autocmd VimEnter * MBEOpen      "run MiniBufExplorer
     "autocmd VimEnter * TagbarOpen
     "colorscheme solarized
     "set t_Co=256
@@ -158,7 +163,7 @@ if has("gui_running")
     "set background=dark
 
     " Show tabs and newline characters with ,s
-    nmap <Leader>s :set list!<CR>
+    nmap <Leader>i :set list!<CR>
     set listchars=tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:×,eol:¬
     "Invisible character colors
     highlight NonText guifg=#4a4a59
@@ -178,8 +183,11 @@ endif
 if has("gui_macvim") "Use Experimental Renderer option must be enabled for transparency
     "set guifont=Monaco:h14
     "set guifont=Monaco:h10
-    set guifont=EssentialPragmataPro:h18
-    set linespacing=2
+    set guifont=EssentialPragmataPro:h15
+    set linespacing=3
+    
+    "set guifont=Meslo\ LG\ L\ DZ:h14
+    
     "set noantialias
     "set transparency=15
     " Swipe to move between bufers :D
@@ -191,4 +199,19 @@ endif
 
 if filereadable($HOME.'/.vimrc_local')
     source $HOME/.vimrc_local
+endif
+if executable('coffeetags')
+  let g:tagbar_type_coffee = {
+        \ 'ctagsbin' : 'coffeetags',
+        \ 'ctagsargs' : '--include-vars',
+        \ 'kinds' : [
+        \ 'f:functions',
+        \ 'o:object',
+        \ ],
+        \ 'sro' : ".",
+        \ 'kind2scope' : {
+        \ 'f' : 'object',
+        \ 'o' : 'object',
+        \ }
+        \ }
 endif
